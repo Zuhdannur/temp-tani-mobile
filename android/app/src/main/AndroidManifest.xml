@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="id.someah.hitung_tani">
+    package="id.unikom.situngtani">
    <application
-        android:label="hitung_tani"
+        android:label="SItung Tani"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
