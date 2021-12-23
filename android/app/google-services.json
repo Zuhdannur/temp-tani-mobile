@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "731171412669",
+    "project_id": "hitung-tani",
+    "storage_bucket": "hitung-tani.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731171412669:android:f77c5607b3b7d4e27c35d4",
+        "android_client_info": {
+          "package_name": "id.unikom.hitungtani"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731171412669-9mdlgbe9mc2gv4tss5es24ura1fcn6oh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFL6YRlTNKGrchwEzxCTauajZAc_VXBdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731171412669-9mdlgbe9mc2gv4tss5es24ura1fcn6oh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

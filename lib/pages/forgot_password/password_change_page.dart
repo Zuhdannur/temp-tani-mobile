@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
-import 'package:situngtani/components/app_button_primary.dart';
-import 'package:situngtani/components/app_text_form_field.dart';
-import 'package:situngtani/pages/forgot_password/password_otp_page.dart';
-import 'package:situngtani/utils/colors.dart';
-import 'package:situngtani/utils/font_styles.dart';
+import 'package:hitungtani/components/app_button_primary.dart';
+import 'package:hitungtani/components/app_text_form_field.dart';
+import 'package:hitungtani/pages/forgot_password/password_otp_page.dart';
+import 'package:hitungtani/utils/colors.dart';
+import 'package:hitungtani/utils/font_styles.dart';
 
 class PasswordChangePage extends StatelessWidget {
   PasswordChangePage({Key? key}) : super(key: key);
@@ -123,7 +123,7 @@ class PasswordChangePage extends StatelessWidget {
                             AppButtonPrimary(
                                 label: "Selanjutnya",
                                 onTap: (){
-                                  Get.to(()=>PasswordOtpPage());
+
                                 }
                             ),
                           ],

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:situngtani/components/app_button_primary.dart';
-import 'package:situngtani/pages/login_page.dart';
-import 'package:situngtani/utils/colors.dart';
-import 'package:situngtani/utils/font_styles.dart';
+import 'package:hitungtani/components/app_button_primary.dart';
+import 'package:hitungtani/pages/login_page.dart';
+import 'package:hitungtani/utils/colors.dart';
+import 'package:hitungtani/utils/font_styles.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({Key? key}) : super(key: key);

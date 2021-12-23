@@ -12,6 +12,8 @@ class AppColors {
   static Color danger100 = Color(0xFFECC8C6);
   static Color danger500 = Color(0xFFBE4138);
   static Color gray50 = Color(0xFFF5F5F5);
+  static Color border = Color(0xFFE0E0E0);
+  static Color buttonSecondary = Color(0xFFBABABA);
   static Color overlay = Color.fromRGBO(22, 22, 22, 0.15);
   static Color overlay2 = Color.fromRGBO(255, 255, 255, 0.65);
 

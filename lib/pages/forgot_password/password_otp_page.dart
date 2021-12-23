@@ -3,11 +3,11 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:situngtani/components/app_button_primary.dart';
-import 'package:situngtani/components/app_text_form_field.dart';
-import 'package:situngtani/pages/forgot_password/password_change_page.dart';
-import 'package:situngtani/utils/colors.dart';
-import 'package:situngtani/utils/font_styles.dart';
+import 'package:hitungtani/components/app_button_primary.dart';
+import 'package:hitungtani/components/app_text_form_field.dart';
+import 'package:hitungtani/pages/forgot_password/password_change_page.dart';
+import 'package:hitungtani/utils/colors.dart';
+import 'package:hitungtani/utils/font_styles.dart';
 
 class PasswordOtpPage extends StatelessWidget {
   PasswordOtpPage({Key? key}) : super(key: key);

@@ -1,4 +1,4 @@
-package id.unikom.situngtani
+package id.unikom.hitungtani
 
 import io.flutter.embedding.android.FlutterActivity
 

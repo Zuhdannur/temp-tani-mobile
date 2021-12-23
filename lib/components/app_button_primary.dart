@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:situngtani/utils/colors.dart';
+import 'package:hitungtani/utils/colors.dart';
 
 class AppButtonPrimary extends StatefulWidget {
 

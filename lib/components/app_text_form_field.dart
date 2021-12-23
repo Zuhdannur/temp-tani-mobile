@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:situngtani/utils/colors.dart';
+import 'package:hitungtani/utils/colors.dart';
 
 class AppTextFormField extends StatefulWidget {
 
@@ -18,8 +18,9 @@ class AppTextFormField extends StatefulWidget {
   String? fieldName;
   Function(String?)? onChanged;
   Widget? leading;
+  bool incrementControl;
 
-  AppTextFormField({Key? key, this.leading, this.onChanged, this.fieldName, this.required = true, this.enabled = true, this.label = "", this.maxLength, this.obscureText = false, this.textCapitalization = TextCapitalization.sentences, this.keyboardType = TextInputType.text, required this.controller, this.trailing, this.maxLines}) : super(key: key);
+  AppTextFormField({Key? key, this.incrementControl = false, this.leading, this.onChanged, this.fieldName, this.required = true, this.enabled = true, this.label = "", this.maxLength, this.obscureText = false, this.textCapitalization = TextCapitalization.sentences, this.keyboardType = TextInputType.text, required this.controller, this.trailing, this.maxLines}) : super(key: key);
   @override
   _AppTextFormFieldState createState() => _AppTextFormFieldState();
 }
@@ -33,6 +34,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
   void initState() {
     // TODO: implement initState
     if(widget.obscureText) this.isObscure = true;
+    if(widget.incrementControl) widget.controller.text = "0";
     this._focusNode.addListener(() {
       setState(() {
 
@@ -49,12 +51,36 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         borderRadius: BorderRadius.circular(8)
       ),
       child: Padding(
-        padding: EdgeInsets.only(left: 16, right: widget.obscureText||widget.trailing!=null?0:16, bottom: widget.maxLength!=null?8:(hasError?8:0)),
+        padding: EdgeInsets.only(left: widget.incrementControl?0:16, right: widget.obscureText||widget.trailing!=null||widget.incrementControl?0:16, bottom: widget.maxLength!=null?8:(hasError?8:0)),
         child: Row(
           children: [
             if(widget.leading!=null)...[
               widget.leading!,
               SizedBox(width: 10,)
+            ],
+            if(widget.incrementControl)...[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: (){
+                    widget.controller.text = (int.parse(widget.controller.text) - 1).toString();
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: AppColors.buttonSecondary.withOpacity(0.25),
+                        borderRadius: BorderRadius.circular(4)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        FeatherIcons.minus,
+                        size: 16,
+                        color: AppColors.icon,
+                      ),
+                    ),
+                  ),
+                ),
+              )
             ],
             Expanded(
               child: TextFormField(
@@ -108,7 +134,31 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
               )
             ]else if(widget.trailing!=null)...[
               widget.trailing!
-            ]
+            ],
+            if(widget.incrementControl)...[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: (){
+                    widget.controller.text = (int.parse(widget.controller.text) + 1).toString();
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: AppColors.buttonSecondary.withOpacity(0.25),
+                        borderRadius: BorderRadius.circular(4)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        FeatherIcons.plus,
+                        size: 16,
+                        color: AppColors.icon
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ],
         ),
       ),

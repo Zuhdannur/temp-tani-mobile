@@ -1,7 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="id.unikom.situngtani">
+    package="id.unikom.hitungtani">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="SItung Tani"
+        android:label="Hitung Tani"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
@@ -37,5 +40,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="@string/GOOGLE_MAPS_API_KEY"/>
     </application>
 </manifest>
