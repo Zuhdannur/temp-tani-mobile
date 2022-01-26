@@ -20,7 +20,7 @@ class AppTextFormField extends StatefulWidget {
   Widget? leading;
   bool incrementControl;
 
-  AppTextFormField({Key? key, this.incrementControl = false, this.leading, this.onChanged, this.fieldName, this.required = true, this.enabled = true, this.label = "", this.maxLength, this.obscureText = false, this.textCapitalization = TextCapitalization.sentences, this.keyboardType = TextInputType.text, required this.controller, this.trailing, this.maxLines}) : super(key: key);
+  AppTextFormField({Key? key, this.incrementControl = false, this.leading, this.onChanged, this.fieldName, this.required = true, this.enabled = true, this.label = "", this.maxLength, this.obscureText = false, this.textCapitalization = TextCapitalization.none, this.keyboardType = TextInputType.text, required this.controller, this.trailing, this.maxLines}) : super(key: key);
   @override
   _AppTextFormFieldState createState() => _AppTextFormFieldState();
 }
@@ -64,6 +64,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
                 child: InkWell(
                   onTap: (){
                     widget.controller.text = (int.parse(widget.controller.text) - 1).toString();
+                    if(widget.onChanged!=null) widget.onChanged!(widget.controller.text);
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -141,6 +142,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
                 child: InkWell(
                   onTap: (){
                     widget.controller.text = (int.parse(widget.controller.text) + 1).toString();
+                    if(widget.onChanged!=null) widget.onChanged!(widget.controller.text);
                   },
                   child: Container(
                     decoration: BoxDecoration(

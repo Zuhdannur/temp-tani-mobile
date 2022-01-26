@@ -51,7 +51,7 @@ class OnboardingPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32),
                     child: Text(
-                      "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet",
+                      "Hitung tani dapat membantu petani dalam merencanakan dan menyusun rencana anggaran dengan menghitung perkiraan jumlah kebutuhan bibit dan perkiraan hasil panen.",
                       style: AppDmSans.smallTitle.copyWith(color: AppColors.text),
                     ),
                   ),

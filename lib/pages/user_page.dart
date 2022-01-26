@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hitungtani/components/app_button_secondary.dart';
+import 'package:hitungtani/controllers/akun_controller.dart';
 import 'package:hitungtani/pages/login_page.dart';
 import 'package:hitungtani/utils/colors.dart';
 import 'package:hitungtani/utils/font_styles.dart';
@@ -9,7 +10,9 @@ import 'package:hitungtani/utils/font_styles.dart';
 import 'akun_menu.dart';
 
 class UserPage extends StatelessWidget {
-  const UserPage({Key? key}) : super(key: key);
+  UserPage({Key? key}) : super(key: key);
+
+  AkunController akunController = Get.put(AkunController());
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +98,7 @@ class UserPage extends StatelessWidget {
                           label: "Keluar dari Akun",
                           foreColor: AppColors.danger500,
                           onTap: (){
-                            Get.offAll(()=>LoginPage());
+                            akunController.logout();
                           },
                         ),
                       ),

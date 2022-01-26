@@ -2,21 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hitungtani/controllers/item_anggaran_controller.dart';
-import 'package:hitungtani/models/item_anggaran.dart';
+import 'package:hitungtani/controllers/detail_anggaran_controller.dart';
+import 'package:hitungtani/models/detail_anggaran.dart';
 import 'package:hitungtani/pages/beranda/anggaran/anggaran_form_page.dart';
+import 'package:hitungtani/pages/beranda/anggaran/detail_anggaran_page.dart';
 import 'package:hitungtani/pages/beranda/anggaran/item_anggaran_page.dart';
 import 'package:hitungtani/utils/colors.dart';
 import 'package:hitungtani/utils/font_styles.dart';
 import 'package:hitungtani/utils/helpers.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 
-import 'detail_anggaran_form_page.dart';
+class TahunAnggaranPage extends StatelessWidget {
+  TahunAnggaranPage({Key? key}) : super(key: key);
 
-class DetailAnggaranPage extends StatelessWidget {
-  DetailAnggaranPage({Key? key}) : super(key: key);
-
-  ItemAnggaranController controller = Get.put(ItemAnggaranController());
+  DetailAnggaranController controller = Get.put(DetailAnggaranController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,23 +26,30 @@ class DetailAnggaranPage extends StatelessWidget {
         brightness: Brightness.dark,
         // toolbarHeight: 0,
         elevation: 0,
-        title: Text(
-          "Detail Anggaran",
-          style: GoogleFonts.dmSans(fontSize: 20, fontWeight: FontWeight.w500, height: 30/20, color: Colors.white),
+        title: Obx((){
+            if(controller.anggaran.value.value!=null){
+              return Text(
+                "Anggaran Tahun ${controller.anggaran.value.value?.tahun??"-"}",
+                style: GoogleFonts.dmSans(fontSize: 20, fontWeight: FontWeight.w500, height: 30/20, color: Colors.white),
+              );
+            }else{
+              return Container();
+            }
+          }
         ),
         leading: BackButton(color: Colors.white,),
       ),
       body: SafeArea(
         child: Obx((){
           return LoadingOverlay(
-            isLoading: controller.isLoading.value||controller.detailAnggaranLoading.value,
+            isLoading: controller.isLoading.value||controller.anggaranLoading.value,
             child: Column(
               children: [
                 Expanded(
                   child: RefreshIndicator(
                     onRefresh: () async {
-                      controller.fetchDetailAnggaran();
-                      controller.fetchAllItemAnggaran();
+                      controller.fetchAnggaran();
+                      controller.fetchAllDetailAnggaran();
                     },
                     child: CustomScrollView(
                       slivers: [
@@ -71,7 +77,7 @@ class DetailAnggaranPage extends StatelessWidget {
                                               children: [
                                                 Expanded(
                                                   child: Text(
-                                                    controller.detailAnggaran.value.value?.namaKategori??"-",
+                                                    "Tahun ${controller.anggaran.value.value?.tahun??"-"}",
                                                     style: AppDmSans.title,
                                                   ),
                                                 ),
@@ -120,11 +126,11 @@ class DetailAnggaranPage extends StatelessWidget {
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.stretch,
                                               children: [
-                                                Text(
-                                                  controller.detailAnggaran.value.value?.deskripsi??"-",
-                                                  style: AppDmSans.smallBody,
-                                                ),
-                                                SizedBox(height: 24,),
+                                                // Text(
+                                                //   "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet",
+                                                //   style: AppDmSans.smallBody,
+                                                // ),
+                                                // SizedBox(height: 24,),
                                                 Row(
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
@@ -133,7 +139,7 @@ class DetailAnggaranPage extends StatelessWidget {
                                                       style: AppDmSans.smallBody,
                                                     ),
                                                     Text(
-                                                      formatCurrency.format(controller.detailAnggaran.value.value?.totalBiayaKategori??0),
+                                                      formatCurrency.format(controller.anggaran.value.value?.totalBiayaKeseluruhan??0),
                                                       style: AppDmSans.smallTitle,
                                                     ),
                                                   ],
@@ -156,12 +162,12 @@ class DetailAnggaranPage extends StatelessWidget {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      "Detail Anggaran",
+                                                      "Daftar Anggaran Tahun ${controller.anggaran.value.value?.tahun??"-"}",
                                                       style: AppDmSans.subTitle,
                                                     ),
                                                     SizedBox(height: 4,),
                                                     Text(
-                                                      "Daftar detail anggaran operasional kebun.",
+                                                      "Daftar  anggaran operasional kebun di tahun 2022.",
                                                       style: AppDmSans.overlineText,
                                                     ),
                                                   ],
@@ -172,10 +178,10 @@ class DetailAnggaranPage extends StatelessWidget {
                                                 child: InkWell(
                                                   borderRadius: BorderRadius.circular(4),
                                                   onTap: () async {
-                                                    controller.itemAnggaran.value.value = ItemAnggaran.instance;
-                                                    await Get.to(()=>DetailAnggaranFormPage());
-                                                    controller.fetchDetailAnggaran();
-                                                    controller.fetchAllItemAnggaran();
+                                                    controller.detailAnggaran.value.value = DetailAnggaran.instance;
+                                                    await Get.to(()=>AnggaranFormPage());
+                                                    controller.fetchAnggaran();
+                                                    controller.fetchAllDetailAnggaran();
                                                   },
                                                   child: Container(
                                                     decoration: BoxDecoration(
@@ -210,10 +216,10 @@ class DetailAnggaranPage extends StatelessWidget {
                                             return RefreshIndicator(
                                               backgroundColor: Colors.white,
                                               onRefresh: () async {
-                                                controller.fetchDetailAnggaran();
-                                                controller.fetchAllItemAnggaran();
+                                                controller.fetchAnggaran();
+                                                controller.fetchAllDetailAnggaran();
                                               },
-                                              child: controller.listItemAnggaran.value.length==0?CustomScrollView(
+                                              child: controller.listDetailAnggaran.value.length==0?CustomScrollView(
                                                 physics: AlwaysScrollableScrollPhysics(),
                                                 slivers: [
                                                   SliverFillRemaining(
@@ -247,9 +253,9 @@ class DetailAnggaranPage extends StatelessWidget {
                                                   ),
                                                 ],
                                               ):ListView.builder(
-                                                itemCount: controller.listItemAnggaran.value.length,
+                                                itemCount: controller.listDetailAnggaran.value.length,
                                                 itemBuilder: (BuildContext context, int index) {
-                                                  var itemAnggaran = controller.listItemAnggaran.value[index];
+                                                  var detailAnggaran = controller.listDetailAnggaran.value[index];
                                                   return Padding(
                                                     padding: const EdgeInsets.symmetric(horizontal: 16),
                                                     child: Column(
@@ -265,8 +271,8 @@ class DetailAnggaranPage extends StatelessWidget {
                                                           child: InkWell(
                                                             borderRadius: BorderRadius.circular(4),
                                                             onTap: () async {
-                                                              await Get.to(()=>ItemAnggaranPage(), arguments: itemAnggaran.id);
-                                                              controller.fetchAllItemAnggaran();
+                                                              await Get.to(()=>DetailAnggaranPage(), arguments: detailAnggaran.id);
+                                                              controller.fetchAllDetailAnggaran();
                                                             },
                                                             child: Container(
                                                               decoration: BoxDecoration(
@@ -282,7 +288,7 @@ class DetailAnggaranPage extends StatelessWidget {
                                                                       children: [
                                                                         Expanded(
                                                                           child: Text(
-                                                                            itemAnggaran.namaSubKategori??"-",
+                                                                            detailAnggaran.namaKategori??"-",
                                                                             style: AppDmSans.smallTitle,
                                                                           ),
                                                                         ),
@@ -317,16 +323,16 @@ class DetailAnggaranPage extends StatelessWidget {
                                                                           ],
                                                                           onSelected: (value) async {
                                                                             if(value==1){
-                                                                              controller.fetchItemAnggaran(id: itemAnggaran.id??0);
-                                                                              await Get.to(() => DetailAnggaranFormPage(), arguments: itemAnggaran.id);
-                                                                              controller.fetchAllItemAnggaran();
+                                                                              controller.fetchDetailAnggaran(id: detailAnggaran.id??0);
+                                                                              await Get.to(() => AnggaranFormPage(), arguments: detailAnggaran.id);
+                                                                              controller.fetchAllDetailAnggaran();
                                                                             }else if(value==2){
-                                                                              showConfirmDialog(title: "Konfirmasi", content: "Anda yakin ingin menghapus data detail anggaran ${itemAnggaran.namaSubKategori}?", callback: () async {
+                                                                              showConfirmDialog(title: "Konfirmasi", content: "Anda yakin ingin menghapus data detail anggaran ${detailAnggaran.namaKategori}?", callback: () async {
                                                                                 controller.isLoading.value = true;
-                                                                                final response = await itemAnggaran.delete();
+                                                                                final response = await detailAnggaran.delete();
                                                                                 controller.isLoading.value = false;
                                                                                 if(response?.error==false){
-                                                                                  controller.fetchAllItemAnggaran();
+                                                                                  controller.fetchAllDetailAnggaran();
                                                                                   AppHelpers.showSnackBar(
                                                                                       snackBarMode: SnackBarMode.SUCCESS, content: "Hapus Detail Anggaran Berhasil");
                                                                                 }
@@ -348,7 +354,7 @@ class DetailAnggaranPage extends StatelessWidget {
                                                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                                                       children: [
                                                                         Text(
-                                                                          itemAnggaran.deskripsi??"-",
+                                                                          detailAnggaran.deskripsi??"-",
                                                                           style: AppDmSans.smallBody,
                                                                         ),
                                                                         SizedBox(height: 24,),
@@ -360,7 +366,7 @@ class DetailAnggaranPage extends StatelessWidget {
                                                                               style: AppDmSans.smallBody,
                                                                             ),
                                                                             Text(
-                                                                              formatCurrency.format(itemAnggaran.totalBiayaSubKategori??0),
+                                                                              formatCurrency.format(detailAnggaran.totalBiayaKategori??0),
                                                                               style: AppDmSans.smallTitle,
                                                                             ),
                                                                           ],
@@ -373,7 +379,7 @@ class DetailAnggaranPage extends StatelessWidget {
                                                             ),
                                                           ),
                                                         ),
-                                                        if(index!=controller.listItemAnggaran.length-1)...[
+                                                        if(index!=controller.listDetailAnggaran.length-1)...[
                                                           SizedBox(height: 8,)
                                                         ]else...[
                                                           SizedBox(height: 16,)
@@ -406,323 +412,4 @@ class DetailAnggaranPage extends StatelessWidget {
       ),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     backgroundColor: Colors.white,
-  //     appBar: AppBar(
-  //       backgroundColor: AppColors.primary,
-  //       brightness: Brightness.dark,
-  //       // toolbarHeight: 0,
-  //       elevation: 0,
-  //       title: Text(
-  //         "Detail Anggaran",
-  //         style: GoogleFonts.dmSans(fontSize: 20, fontWeight: FontWeight.w500, height: 30/20, color: Colors.white),
-  //       ),
-  //       leading: BackButton(color: Colors.white,),
-  //     ),
-  //     body: SafeArea(
-  //       child: Column(
-  //         children: [
-  //           Expanded(
-  //             child: CustomScrollView(
-  //               slivers: [
-  //                 SliverFillRemaining(
-  //                   child: Padding(
-  //                     padding: const EdgeInsets.all(16),
-  //                     child: Column(
-  //                       crossAxisAlignment: CrossAxisAlignment.stretch,
-  //                       children: [
-  //                         Expanded(
-  //                           child: Container(
-  //                             decoration: BoxDecoration(
-  //                                 color: Colors.white,
-  //                                 borderRadius: BorderRadius.circular(8),
-  //                                 boxShadow: AppHelpers.cardBoxShadow
-  //                             ),
-  //                             child: Column(
-  //                               crossAxisAlignment: CrossAxisAlignment.stretch,
-  //                               children: [
-  //                                 SizedBox(height: 16,),
-  //                                 Padding(
-  //                                   padding: const EdgeInsets.symmetric(horizontal: 16),
-  //                                   child: Row(
-  //                                     children: [
-  //                                       Expanded(
-  //                                         child: Text(
-  //                                           "Biaya Pokok",
-  //                                           style: AppDmSans.title,
-  //                                         ),
-  //                                       ),
-  //                                       // PopupMenuButton(
-  //                                       //   child: Container(
-  //                                       //     decoration: BoxDecoration(
-  //                                       //         color: AppColors.buttonSecondary.withOpacity(0.25),
-  //                                       //         borderRadius: BorderRadius.circular(4)
-  //                                       //
-  //                                       //     ),
-  //                                       //     child: Padding(
-  //                                       //       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-  //                                       //       child: Icon(
-  //                                       //         FeatherIcons.moreHorizontal,
-  //                                       //         color: AppColors.icon,
-  //                                       //       ),
-  //                                       //     ),
-  //                                       //   ),
-  //                                       //   itemBuilder: (context) => [
-  //                                       //     // PopupMenuItem(
-  //                                       //     //   value: 1,
-  //                                       //     //   child: Text("Detail"),
-  //                                       //     // ),
-  //                                       //     PopupMenuItem(
-  //                                       //       value: 1,
-  //                                       //       child: Text("Edit"),
-  //                                       //     ),
-  //                                       //     PopupMenuItem(
-  //                                       //       value: 2,
-  //                                       //       child: Text("Delete"),
-  //                                       //     )
-  //                                       //   ],
-  //                                       //   onSelected: (value) async {
-  //                                       //     // if(value==1){
-  //                                       //     //   Get.to(()=>DetailAnggaranPage());
-  //                                       //     // }
-  //                                       //   },
-  //                                       // )
-  //                                     ],
-  //                                   ),
-  //                                 ),
-  //                                 Padding(
-  //                                   padding: const EdgeInsets.all(16),
-  //                                   child: Column(
-  //                                     crossAxisAlignment: CrossAxisAlignment.stretch,
-  //                                     children: [
-  //                                       Text(
-  //                                         "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet",
-  //                                         style: AppDmSans.smallBody,
-  //                                       ),
-  //                                       SizedBox(height: 24,),
-  //                                       Row(
-  //                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                                         children: [
-  //                                           Text(
-  //                                             "Total Biaya",
-  //                                             style: AppDmSans.smallBody,
-  //                                           ),
-  //                                           Text(
-  //                                             "Rp. 3.000.000",
-  //                                             style: AppDmSans.smallTitle,
-  //                                           ),
-  //                                         ],
-  //                                       )
-  //                                     ],
-  //                                   ),
-  //                                 ),
-  //                                 Divider(
-  //                                   height: 1,
-  //                                   color: AppColors.border,
-  //                                   thickness: 1,
-  //                                 ),
-  //                                 Padding(
-  //                                   padding: const EdgeInsets.all(16),
-  //                                   child: Row(
-  //                                     children: [
-  //                                       Expanded(
-  //                                         child: Column(
-  //                                           crossAxisAlignment: CrossAxisAlignment.start,
-  //                                           children: [
-  //                                             Text(
-  //                                               "Detail Anggaran",
-  //                                               style: AppDmSans.subTitle,
-  //                                             ),
-  //                                             SizedBox(height: 4,),
-  //                                             Text(
-  //                                               "Daftar detail anggaran operasional kebun.",
-  //                                               style: AppDmSans.overlineText,
-  //                                             ),
-  //                                           ],
-  //                                         ),
-  //                                       ),
-  //                                       Material(
-  //                                         color: Colors.transparent,
-  //                                         child: InkWell(
-  //                                           borderRadius: BorderRadius.circular(4),
-  //                                           onTap: (){
-  //                                             Get.to(()=>AnggaranFormPage());
-  //                                           },
-  //                                           child: Container(
-  //                                             decoration: BoxDecoration(
-  //                                                 color: AppColors.buttonSecondary.withOpacity(0.25),
-  //                                                 borderRadius: BorderRadius.circular(4)
-  //
-  //                                             ),
-  //                                             child: Padding(
-  //                                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-  //                                               child: Icon(
-  //                                                 FeatherIcons.plus,
-  //                                                 color: AppColors.icon,
-  //                                                 size: 16,
-  //                                               ),
-  //                                             ),
-  //                                           ),
-  //                                         ),
-  //                                       )
-  //                                     ],
-  //                                   ),
-  //                                 ),
-  //                                 Padding(
-  //                                   padding: const EdgeInsets.symmetric(horizontal: 16),
-  //                                   child: Divider(
-  //                                     height: 1,
-  //                                     color: AppColors.border,
-  //                                     thickness: 1,
-  //                                   ),
-  //                                 ),
-  //                                 Expanded(
-  //                                   child: RefreshIndicator(
-  //                                     backgroundColor: Colors.white,
-  //                                     onRefresh: () async {
-  //
-  //                                     },
-  //                                     child: ListView.builder(
-  //                                       itemCount: 4,
-  //                                       itemBuilder: (BuildContext context, int index) {
-  //                                         return Padding(
-  //                                           padding: const EdgeInsets.symmetric(horizontal: 16),
-  //                                           child: Column(
-  //                                             crossAxisAlignment: CrossAxisAlignment.stretch,
-  //                                             children: [
-  //                                               if(index==0)...[
-  //                                                 SizedBox(height: 16,)
-  //                                               ]else...[
-  //                                                 SizedBox(height: 8,)
-  //                                               ],
-  //                                               Material(
-  //                                                 color: Colors.transparent,
-  //                                                 child: InkWell(
-  //                                                   borderRadius: BorderRadius.circular(4),
-  //                                                   onTap: (){
-  //                                                     Get.to(()=>ItemAnggaranPage());
-  //                                                   },
-  //                                                   child: Container(
-  //                                                     decoration: BoxDecoration(
-  //                                                         border: Border.all(color: AppColors.border),
-  //                                                         borderRadius: BorderRadius.circular(4)
-  //                                                     ),
-  //                                                     child: Column(
-  //                                                       crossAxisAlignment: CrossAxisAlignment.stretch,
-  //                                                       children: [
-  //                                                         Padding(
-  //                                                           padding: const EdgeInsets.all(16),
-  //                                                           child: Row(
-  //                                                             children: [
-  //                                                               Expanded(
-  //                                                                 child: Text(
-  //                                                                   "Biaya Pokok",
-  //                                                                   style: AppDmSans.smallTitle,
-  //                                                                 ),
-  //                                                               ),
-  //                                                               PopupMenuButton(
-  //                                                                 child: Container(
-  //                                                                   decoration: BoxDecoration(
-  //                                                                       color: AppColors.buttonSecondary.withOpacity(0.25),
-  //                                                                       borderRadius: BorderRadius.circular(4)
-  //
-  //                                                                   ),
-  //                                                                   child: Padding(
-  //                                                                     padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-  //                                                                     child: Icon(
-  //                                                                       FeatherIcons.moreHorizontal,
-  //                                                                       color: AppColors.icon,
-  //                                                                     ),
-  //                                                                   ),
-  //                                                                 ),
-  //                                                                 itemBuilder: (context) => [
-  //                                                                   // PopupMenuItem(
-  //                                                                   //   value: 1,
-  //                                                                   //   child: Text("Detail"),
-  //                                                                   // ),
-  //                                                                   PopupMenuItem(
-  //                                                                     value: 1,
-  //                                                                     child: Text("Edit"),
-  //                                                                   ),
-  //                                                                   PopupMenuItem(
-  //                                                                     value: 2,
-  //                                                                     child: Text("Delete"),
-  //                                                                   )
-  //                                                                 ],
-  //                                                                 onSelected: (value) async {
-  //                                                                   // if(value==1){
-  //                                                                   //   Get.to(()=>DetailAnggaranPage());
-  //                                                                   // }
-  //                                                                 },
-  //                                                               )
-  //                                                             ],
-  //                                                           ),
-  //                                                         ),
-  //                                                         Divider(
-  //                                                           height: 1,
-  //                                                           color: AppColors.border,
-  //                                                           thickness: 1,
-  //                                                         ),
-  //                                                         Padding(
-  //                                                           padding: const EdgeInsets.all(16),
-  //                                                           child: Column(
-  //                                                             crossAxisAlignment: CrossAxisAlignment.stretch,
-  //                                                             children: [
-  //                                                               Text(
-  //                                                                 "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet",
-  //                                                                 style: AppDmSans.smallBody,
-  //                                                               ),
-  //                                                               SizedBox(height: 24,),
-  //                                                               Row(
-  //                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                                                                 children: [
-  //                                                                   Text(
-  //                                                                     "Total Biaya",
-  //                                                                     style: AppDmSans.smallBody,
-  //                                                                   ),
-  //                                                                   Text(
-  //                                                                     "Rp. 3.000.000",
-  //                                                                     style: AppDmSans.smallTitle,
-  //                                                                   ),
-  //                                                                 ],
-  //                                                               )
-  //                                                             ],
-  //                                                           ),
-  //                                                         ),
-  //                                                       ],
-  //                                                     ),
-  //                                                   ),
-  //                                                 ),
-  //                                               ),
-  //                                               if(index!=3)...[
-  //                                                 SizedBox(height: 8,)
-  //                                               ]else...[
-  //                                                 SizedBox(height: 16,)
-  //                                               ]
-  //                                             ],
-  //                                           ),
-  //                                         );
-  //                                       },
-  //                                     ),
-  //                                   ),
-  //                                 ),
-  //                               ],
-  //                             ),
-  //                           ),
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           )
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 }

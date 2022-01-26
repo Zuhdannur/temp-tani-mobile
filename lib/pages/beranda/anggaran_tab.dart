@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
+import 'package:hitungtani/controllers/beranda_controller.dart';
 import 'package:hitungtani/pages/beranda/anggaran/anggaran_form_page.dart';
 import 'package:hitungtani/pages/beranda/anggaran/detail_anggaran_page.dart';
+import 'package:hitungtani/pages/beranda/anggaran/tahun_anggaran_form_page.dart';
+import 'package:hitungtani/pages/beranda/anggaran/tahun_anggaran_page.dart';
 import 'package:hitungtani/utils/colors.dart';
 import 'package:hitungtani/utils/font_styles.dart';
 import 'package:hitungtani/utils/helpers.dart';
 
 class AnggaranTab extends StatelessWidget {
-  const AnggaranTab({Key? key}) : super(key: key);
+  AnggaranTab({Key? key}) : super(key: key);
+
+  BerandaController berandaController = Get.put(BerandaController());
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +56,9 @@ class AnggaranTab extends StatelessWidget {
                           color: Colors.transparent,
                           child: InkWell(
                             borderRadius: BorderRadius.circular(4),
-                            onTap: (){
-                              Get.to(()=>AnggaranFormPage());
+                            onTap: () async {
+                              await Get.to(()=>TahunAnggaranFormPage());
+                              berandaController.fetchAnggaran();
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -83,11 +89,47 @@ class AnggaranTab extends StatelessWidget {
                     child: RefreshIndicator(
                       backgroundColor: Colors.white,
                       onRefresh: () async {
-
+                        if(berandaController.idKebun.value.value!=null){
+                          berandaController.fetchAnggaran();
+                        }
                       },
-                      child: ListView.builder(
-                        itemCount: 4,
+                      child: berandaController.listAnggaran.value.length==0?CustomScrollView(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        slivers: [
+                          SliverFillRemaining(
+                            child: Container(
+                              height: double.infinity,
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        "assets/empty.png",
+                                        width: 128,
+                                      ),
+                                      SizedBox(height: 12,),
+                                      Text(
+                                        "Anggaran belum tersedia",
+                                        style: AppDmSans.heading3.copyWith(color: AppColors.primary),
+                                      ),
+                                      SizedBox(height: 8,),
+                                      Text(
+                                        "Harap tambahkan data anggaran.",
+                                        style: AppDmSans.smallTitle.copyWith(color: AppColors.text),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ):ListView.builder(
+                        itemCount: berandaController.listAnggaran.value.length,
                         itemBuilder: (BuildContext context, int index) {
+                          var tahun = berandaController.listAnggaran.value[index];
                           return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Column(
@@ -102,8 +144,9 @@ class AnggaranTab extends StatelessWidget {
                                   color: Colors.transparent,
                                   child: InkWell(
                                     borderRadius: BorderRadius.circular(4),
-                                    onTap: (){
-                                      Get.to(()=>DetailAnggaranPage());
+                                    onTap: () async {
+                                      await Get.to(()=>TahunAnggaranPage(), arguments: tahun.id);
+                                      berandaController.fetchAnggaran();
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -119,7 +162,7 @@ class AnggaranTab extends StatelessWidget {
                                               children: [
                                                 Expanded(
                                                   child: Text(
-                                                    "Biaya Pokok",
+                                                    "Tahun ${tahun.tahun}",
                                                     style: AppDmSans.smallTitle,
                                                   ),
                                                 ),
@@ -153,9 +196,21 @@ class AnggaranTab extends StatelessWidget {
                                                     )
                                                   ],
                                                   onSelected: (value) async {
-                                                    // if(value==1){
-                                                    //   Get.to(()=>DetailAnggaranPage());
-                                                    // }
+                                                    if(value==1){
+                                                      await Get.to(() => TahunAnggaranFormPage(), arguments: tahun.id);
+                                                      berandaController.fetchAnggaran();
+                                                    }else if(value==2){
+                                                      showConfirmDialog(title: "Konfirmasi", content: "Anda yakin ingin menghapus data anggaran tahun ${tahun.tahun}?", callback: () async {
+                                                        berandaController.isLoading.value = true;
+                                                        final response = await tahun.delete();
+                                                        berandaController.isLoading.value = false;
+                                                        if(response?.error==false){
+                                                          berandaController.fetchAnggaran();
+                                                          AppHelpers.showSnackBar(
+                                                              snackBarMode: SnackBarMode.SUCCESS, content: "Hapus Tahun Anggaran Berhasil");
+                                                        }
+                                                      });
+                                                    }
                                                   },
                                                 )
                                               ],
@@ -171,11 +226,11 @@ class AnggaranTab extends StatelessWidget {
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.stretch,
                                               children: [
-                                                Text(
-                                                  "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet",
-                                                  style: AppDmSans.smallBody,
-                                                ),
-                                                SizedBox(height: 24,),
+                                                // Text(
+                                                //   "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet",
+                                                //   style: AppDmSans.smallBody,
+                                                // ),
+                                                // SizedBox(height: 24,),
                                                 Row(
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
@@ -184,7 +239,7 @@ class AnggaranTab extends StatelessWidget {
                                                       style: AppDmSans.smallBody,
                                                     ),
                                                     Text(
-                                                      "Rp. 3.000.000",
+                                                      formatCurrency.format(tahun.totalBiayaKeseluruhan??0),
                                                       style: AppDmSans.smallTitle,
                                                     ),
                                                   ],
@@ -197,7 +252,7 @@ class AnggaranTab extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                if(index!=3)...[
+                                if(index!=berandaController.listAnggaran.value.length-1)...[
                                   SizedBox(height: 8,)
                                 ]else...[
                                   SizedBox(height: 16,)

@@ -5,14 +5,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hitungtani/components/app_button_primary.dart';
 import 'package:hitungtani/components/app_text_form_field.dart';
 import 'package:hitungtani/controllers/detail_anggaran_controller.dart';
+import 'package:hitungtani/controllers/item_anggaran_controller.dart';
 import 'package:hitungtani/utils/colors.dart';
 import 'package:hitungtani/utils/helpers.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 
-class AnggaranFormPage extends StatelessWidget {
-  AnggaranFormPage({Key? key}) : super(key: key);
+class DetailAnggaranFormPage extends StatelessWidget {
+  DetailAnggaranFormPage({Key? key}) : super(key: key);
 
-  DetailAnggaranController controller = Get.put(DetailAnggaranController());
+  ItemAnggaranController controller = Get.put(ItemAnggaranController());
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class AnggaranFormPage extends StatelessWidget {
         elevation: 0,
         title: Obx((){
           return Text(
-            "${controller.detailAnggaran.value.value?.id!=null?"Ubah":"Tambah"} Anggaran",
+            "${controller.itemAnggaran.value.value?.id!=null?"Ubah":"Tambah"} Detail Anggaran",
             style: GoogleFonts.dmSans(fontSize: 20, fontWeight: FontWeight.w500, height: 30/20, color: Colors.white),
           );
         }),
@@ -40,8 +41,8 @@ class AnggaranFormPage extends StatelessWidget {
                 Expanded(
                   child: RefreshIndicator(
                     onRefresh: () async {
-                      if(controller.detailAnggaran.value.value?.id!=null){
-                        controller.fetchDetailAnggaran(id: controller.detailAnggaran.value.value?.id??0);
+                      if(controller.itemAnggaran.value.value?.id!=null){
+                        controller.fetchItemAnggaran(id: controller.itemAnggaran.value.value?.id??0);
                       }
                     },
                     child: SingleChildScrollView(
@@ -56,24 +57,24 @@ class AnggaranFormPage extends StatelessWidget {
                                 children: [
                                   AppTextFormField(
                                     label: "Nama Anggaran",
-                                    controller: controller.detailAnggaran.value.value?.namaKategoriController??TextEditingController(),
+                                    controller: controller.itemAnggaran.value.value?.namaSubKategoriController??TextEditingController(),
                                     fieldName: "Nama Anggaran",
                                     textCapitalization: TextCapitalization.sentences,
                                     onChanged: (value){
-                                      controller.detailAnggaran.value.value?.namaKategori = controller.detailAnggaran.value.value?.namaKategoriController.text;
+                                      controller.itemAnggaran.value.value?.namaSubKategori = controller.itemAnggaran.value.value?.namaSubKategoriController.text;
                                     },
                                   ),
                                   SizedBox(height: 16,),
                                   AppTextFormField(
                                     label: "Keterangan Anggaran",
-                                    controller: controller.detailAnggaran.value.value?.deskripsiController??TextEditingController(),
+                                    controller: controller.itemAnggaran.value.value?.deskripsiController??TextEditingController(),
                                     fieldName: "Keterangan",
                                     keyboardType: TextInputType.multiline,
                                     textCapitalization: TextCapitalization.sentences,
                                     maxLines: 3,
                                     maxLength: 500,
                                     onChanged: (value){
-                                      controller.detailAnggaran.value.value?.deskripsi = controller.detailAnggaran.value.value?.deskripsiController.text;
+                                      controller.itemAnggaran.value.value?.deskripsi = controller.itemAnggaran.value.value?.deskripsiController.text;
                                     },
                                   ),
                                 ],
@@ -100,10 +101,10 @@ class AnggaranFormPage extends StatelessWidget {
           return AppButtonPrimary(
             enabled: !controller.formLoading.value,
             onTap: (){
-              if(controller.detailAnggaran.value.value?.id!=null){
-                controller.updateDetailAnggaran();
+              if(controller.itemAnggaran.value.value?.id!=null){
+                controller.updateItemAnggaran();
               }else{
-                controller.createDetailAnggaran();
+                controller.createItemAnggaran();
               }
             },
             label: "Simpan",

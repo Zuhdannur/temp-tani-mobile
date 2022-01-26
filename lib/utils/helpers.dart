@@ -1,8 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hitungtani/services/repository.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
@@ -12,6 +15,12 @@ import 'package:hitungtani/components/app_button_secondary.dart';
 
 import 'colors.dart';
 import 'font_styles.dart';
+
+GetIt locator = GetIt.instance;
+
+void setupLocator(){
+  locator.registerLazySingleton(() => Repository(dio: Dio(), tokenDio: Dio()));
+}
 
 enum SnackBarMode {
   ERROR,
@@ -65,11 +74,11 @@ class AppHelpers{
       behavior: SnackBarBehavior.floating,
       shape:  RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4),
-        side: BorderSide(color: AppColors.danger500),
+        side: BorderSide(color: snackBarMode == SnackBarMode.SUCCESS ? AppColors.semanticColorSwatch[500]! : AppColors.danger500),
       ),
       action: SnackBarAction(
         label: 'Tutup',
-        textColor: AppColors.danger500,
+        textColor: snackBarMode == SnackBarMode.SUCCESS ? AppColors.semanticColorSwatch[500] : AppColors.danger500,
         onPressed: () {
           ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar();
         },
@@ -78,7 +87,7 @@ class AppHelpers{
   }
 }
 
-final formatCurrency = NumberFormat.currency(locale: "id_ID", symbol: "Rp", decimalDigits: 0);
+final formatCurrency = NumberFormat.currency(locale: "id_ID", symbol: "Rp. ", decimalDigits: 0);
 final formatPercentage = NumberFormat.percentPattern();
 
 void onWidgetDidBuild(Function callback) {
