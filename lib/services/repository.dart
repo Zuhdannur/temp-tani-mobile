@@ -67,6 +67,17 @@ class Repository{
     }
   }
 
+  Future fetchSummary({required int id}) async {
+    try{
+      final response = await tokenDio.get("summary/$id");
+      return response.data;
+    }on DioError catch(e){
+      throw Exception("Terjadi Kesalahan");
+    }catch(e){
+      print(e);
+    }
+  }
+
   Future fetchOneKebun({required int id}) async {
     try{
       final response = await tokenDio.get("kebun/$id");

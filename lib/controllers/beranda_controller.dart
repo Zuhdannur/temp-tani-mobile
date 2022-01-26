@@ -1,16 +1,19 @@
 import 'package:get/get.dart';
 import 'package:hitungtani/models/anggaran.dart';
 import 'package:hitungtani/models/kebun.dart';
+import 'package:hitungtani/models/summary.dart';
 
 class BerandaController extends GetxController {
   var kebun = Rxn<Kebun>().obs;
   var listKebun = List<Kebun>.empty(growable: true).obs;
   var listAnggaran = List<Anggaran>.empty(growable: true).obs;
+  var summary = Rxn<Summary>().obs;
 
   var isLoading = false.obs;
   var oneIsLoading = false.obs;
 
   var idKebun = Rxn<int>().obs;
+  var idAnggaran = Rxn<int>().obs;
 
   @override
   void onInit() {
@@ -36,6 +39,13 @@ class BerandaController extends GetxController {
     isLoading.value = true;
     listAnggaran.value = [];
     listAnggaran.value = await Anggaran.instance.fetchAll(id: idKebun.value.value??0)??[];
+    isLoading.value = false;
+  }
+
+  void fetchSummary() async {
+    isLoading.value = true;
+    summary.value.value = null;
+    summary.value.value = await Summary.instance.fetch(id: idAnggaran.value.value??0);
     isLoading.value = false;
   }
 }

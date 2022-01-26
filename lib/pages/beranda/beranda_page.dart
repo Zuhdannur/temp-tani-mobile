@@ -159,6 +159,7 @@ class BerandaPage extends StatelessWidget {
                                     underline: Container(),
                                     onChanged: (int? newValue) {
                                       controller.idKebun.value.value = newValue;
+                                      controller.idAnggaran.value.value = null;
                                       controller.fetchOneKebun();
                                       controller.fetchAnggaran();
                                     },
@@ -203,6 +204,11 @@ class BerandaPage extends StatelessWidget {
                               if(controller.idKebun.value.value!=null){
                                 if(index==1){
                                   controller.fetchAnggaran();
+                                }else if(index==2){
+                                  controller.fetchAnggaran();
+                                  if(controller.idAnggaran.value.value!=null){
+                                    controller.fetchSummary();
+                                  }
                                 }
                               }
                             },

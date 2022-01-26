@@ -17,6 +17,9 @@ class SelectKebun extends StatelessWidget {
       onRefresh: () async {
         controller.kebun.value.value = null;
         controller.fetchKebun();
+        if(controller.idKebun.value.value!=null){
+          controller.fetchAnggaran();
+        }
       },
       child: CustomScrollView(
         physics: AlwaysScrollableScrollPhysics(),

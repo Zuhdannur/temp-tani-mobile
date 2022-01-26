@@ -50,7 +50,7 @@ class UserPage extends StatelessWidget {
                             ),
                             SizedBox(height: 4,),
                             Text(
-                              "Rizki Banyu Firdaus",
+                              akunController.user?.namaLengkap??"-",
                               style: AppDmSans.title.copyWith(color: AppColors.text),
                             ),
                             SizedBox(height: 8,),
@@ -60,7 +60,7 @@ class UserPage extends StatelessWidget {
                             ),
                             SizedBox(height: 4,),
                             Text(
-                              "rbanyufirdaus@gmail.com",
+                              akunController.user?.email??"-",
                               style: AppDmSans.title.copyWith(color: AppColors.text),
                             ),
                             SizedBox(height: 8,),
@@ -70,27 +70,27 @@ class UserPage extends StatelessWidget {
                             ),
                             SizedBox(height: 4,),
                             Text(
-                              "082212345678",
+                              akunController.user?.telepon??"-",
                               style: AppDmSans.title.copyWith(color: AppColors.text),
                             ),
                           ],
                         ),
                       ),
                       // SizedBox(height: 16,),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16),
-                        child: Text(
-                          "Info Lainnya",
-                          style: AppDmSans.title.copyWith(color: AppColors.monochromeColorSwatch[900]),
-                        ),
-                      ),
-                      AkunMenu(
-                        label: "Kebijakan Privasi",
-                        icon: Icons.shield,
-                        onTap: (){
-
-                        },
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 16),
+                      //   child: Text(
+                      //     "Info Lainnya",
+                      //     style: AppDmSans.title.copyWith(color: AppColors.monochromeColorSwatch[900]),
+                      //   ),
+                      // ),
+                      // AkunMenu(
+                      //   label: "Kebijakan Privasi",
+                      //   icon: Icons.shield,
+                      //   onTap: (){
+                      //
+                      //   },
+                      // ),
                       SizedBox(height: 24,),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
