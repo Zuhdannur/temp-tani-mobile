@@ -133,19 +133,20 @@ class LoginPage extends StatelessWidget {
                                   obscureText: true,
                                   leading: Icon(FeatherIcons.lock, color: AppColors.icon, size: 16,),
                                 ),
-                                Align(
-                                  alignment: Alignment.topRight,
-                                  child: TextButton(
-                                    onPressed: (){
-                                      Get.to(()=>PasswordEmailPage());
-                                    },
-                                    child: Text(
-                                      "Lupa kata sandi ?",
-                                      style: AppDmSans.smallTitle.copyWith(color: AppColors.accent),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 4,),
+                                // Align(
+                                //   alignment: Alignment.topRight,
+                                //   child: TextButton(
+                                //     onPressed: (){
+                                //       Get.to(()=>PasswordEmailPage());
+                                //     },
+                                //     child: Text(
+                                //       "Lupa kata sandi ?",
+                                //       style: AppDmSans.smallTitle.copyWith(color: AppColors.accent),
+                                //     ),
+                                //   ),
+                                // ),
+                                // SizedBox(height: 4,),
+                                SizedBox(height: 24,),
                                 AppButtonPrimary(
                                     label: "Masuk",
                                     onTap: (){

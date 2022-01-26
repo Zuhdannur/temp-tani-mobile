@@ -193,7 +193,7 @@ class SummaryTab extends StatelessWidget {
                                     ),
                                     SizedBox(height: 4,),
                                     Text(
-                                      "Rp. 2.000.000",
+                                      formatCurrency.format(controller.summary.value.value?.keuntungan??0),
                                       style: AppDmSans.smallTitle.copyWith(color: AppColors.semanticColorSwatch[500], fontWeight: FontWeight.w700),
                                     ),
                                     SizedBox(height: 8,),
@@ -209,7 +209,7 @@ class SummaryTab extends StatelessWidget {
                                               ),
                                               SizedBox(height: 4,),
                                               Text(
-                                                "Rp. 5.000.000",
+                                                formatCurrency.format(controller.summary.value.value?.pendapatan??0),
                                                 style: AppDmSans.smallTitle.copyWith(color: AppColors.text),
                                               ),
                                             ],
@@ -226,7 +226,7 @@ class SummaryTab extends StatelessWidget {
                                               ),
                                               SizedBox(height: 4,),
                                               Text(
-                                                "Rp. 3.000.000",
+                                                formatCurrency.format(controller.summary.value.value?.pengeluaran??0),
                                                 style: AppDmSans.smallTitle.copyWith(color: AppColors.dangerColorSwatch[500], fontWeight: FontWeight.w700),
                                               ),
                                             ],

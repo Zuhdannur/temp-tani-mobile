@@ -55,10 +55,12 @@ class MyApp extends StatelessWidget {
       future: Init.instance.initialize(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return GetMaterialApp(home: SplashScreen());
+          return GetMaterialApp(home: SplashScreen(),
+          debugShowCheckedModeBanner: false,);
         } else {
           return GetMaterialApp(
             title: 'Hitung Tani',
+            debugShowCheckedModeBanner: false,
             localizationsDelegates: const [
               location_picker.S.delegate,
               GlobalMaterialLocalizations.delegate,

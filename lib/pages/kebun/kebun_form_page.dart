@@ -49,10 +49,10 @@ class KebunFormPage extends StatelessWidget {
             isLoading: controller.isLoading.value,
             child: RefreshIndicator(
               onRefresh: () async {
-
+                controller.fetchJenis();
               },
               child: CustomScrollView(
-                physics: NeverScrollableScrollPhysics(),
+                physics: AlwaysScrollableScrollPhysics(),
                 slivers: [
                   SliverFillRemaining(
                     child: Container(

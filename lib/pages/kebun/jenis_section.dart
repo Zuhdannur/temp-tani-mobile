@@ -104,7 +104,7 @@ class JenisSection extends StatelessWidget {
                               SizedBox(width: 16,),
                               Expanded(
                                 child: AppTextFormField(
-                                  label: "Luas Lahan",
+                                  label: "Luas Lahan (m\u00B2)",
                                   controller: controller.kebun.value.value?.luasLahanController??TextEditingController(),
                                   fieldName: "Luas Lahan",
                                   keyboardType: TextInputType.number,
@@ -120,7 +120,7 @@ class JenisSection extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: AppTextFormField(
-                                  label: "Jarak Tanam",
+                                  label: "Jarak Tanam (cm)",
                                   controller: controller.kebun.value.value?.jarakTanamController??TextEditingController(),
                                   fieldName: "Jarak Tanam",
                                   keyboardType: TextInputType.number,
@@ -132,7 +132,7 @@ class JenisSection extends StatelessWidget {
                               SizedBox(width: 16,),
                               Expanded(
                                 child: AppTextFormField(
-                                  label: "Waktu Penanaman",
+                                  label: "Waktu Penanaman (Bulan)",
                                   controller: controller.kebun.value.value?.waktuPenanamanController??TextEditingController(),
                                   fieldName: "Waktu Penanaman",
                                   keyboardType: TextInputType.number,
@@ -145,7 +145,7 @@ class JenisSection extends StatelessWidget {
                           ),
                           SizedBox(height: 16,),
                           AppTextFormField(
-                            label: "Perkiraan Hasil Panen per Ubin",
+                            label: "Perkiraan Hasil Panen per Ubin (Kg)",
                             controller: controller.kebun.value.value?.hasilPanenController??TextEditingController(),
                             fieldName: "Perkiraan Hasil Panen",
                             keyboardType: TextInputType.number,
@@ -155,7 +155,7 @@ class JenisSection extends StatelessWidget {
                           ),
                           SizedBox(height: 16,),
                           AppTextFormField(
-                            label: "Harga Satuan per Hasil Panen",
+                            label: "Harga Satuan per Hasil Panen (Rp.)",
                             controller: controller.kebun.value.value?.hargaSatuanController??TextEditingController(),
                             fieldName: "Harga Satuan",
                             keyboardType: TextInputType.number,
