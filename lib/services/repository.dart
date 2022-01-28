@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_config/flutter_config.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' as getx;
 import 'package:hitungtani/controllers/akun_controller.dart';
+import 'package:hitungtani/controllers/beranda_controller.dart';
+import 'package:hitungtani/models/response_no_data.dart';
 import 'package:hitungtani/services/logging_interceptor.dart';
+import 'package:hitungtani/utils/helpers.dart';
 
 class Repository{
   String baseUrl = "${FlutterConfig.get("API_BASE_URL")}";
@@ -75,6 +80,43 @@ class Repository{
       throw Exception("Terjadi Kesalahan");
     }catch(e){
       print(e);
+    }
+  }
+
+  Future printSummary({required int id, required String file, required CancelToken cancelToken}) async {
+    // try{
+    //   final response = await tokenDio.get("summary/print/$id");
+    //   return response.data;
+    // }on DioError catch(e){
+    //   throw Exception("Terjadi Kesalahan");
+    // }catch(e){
+    //   print(e);
+    // }
+
+    BerandaController controller = getx.Get.put(BerandaController());
+    try{
+      final response = await tokenDio.download(
+          "summary/print/$id",
+          file,
+          options: Options(headers: {HttpHeaders.contentTypeHeader: "application/json"}, method: "GET"),
+          onReceiveProgress: (received, total){
+            controller.downloadProgress.value.value = received / total;
+          },
+          cancelToken: cancelToken
+      );
+      return response.data;
+    } on DioError catch(e){
+      if(e.type != DioErrorType.cancel){
+        if(e.response!=null){
+          print(e.response?.data);
+          var response = ResponseNoData.fromJson(e.response!.data);
+          AppHelpers.showSnackBar(snackBarMode: SnackBarMode.ERROR, content: response.message??"-");
+        }else{
+          AppHelpers.showSnackBar(snackBarMode: SnackBarMode.ERROR, content: "Terjadi kesalahan, silakan coba kembali dalam beberapa saat.");
+        }
+      }
+    } catch (e){
+      print(e.toString());
     }
   }
 

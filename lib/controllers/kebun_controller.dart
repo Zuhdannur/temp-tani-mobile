@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:flutter_config/flutter_config.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:flutter_config/flutter_config.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:google_map_location_picker/google_map_location_picker.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:google_map_location_picker/google_map_location_picker.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hitungtani/controllers/beranda_controller.dart';
 import 'package:hitungtani/models/jenis_tanaman.dart';
 import 'package:hitungtani/models/kebun.dart';
@@ -17,10 +17,10 @@ class KebunController extends GetxController {
 
   var address = Rxn<String>().obs;
 
-  var locationLoading = false.obs;
+  // var locationLoading = false.obs;
   var submitLoading = false.obs;
 
-  var apiKey = FlutterConfig.get("GOOGLE_MAPS_API_KEY");
+  // var apiKey = FlutterConfig.get("GOOGLE_MAPS_API_KEY");
 
   var kebun = Rxn<Kebun>().obs;
 
@@ -30,18 +30,18 @@ class KebunController extends GetxController {
 
   BerandaController berandaController = Get.put(BerandaController());
 
-  CameraPosition indonesia = CameraPosition(
-    target: LatLng(-6.2241875,106.8054558),
-    zoom: 15,
-  );
-
-  Completer<GoogleMapController> mapsController = Completer();
+  // CameraPosition indonesia = CameraPosition(
+  //   target: LatLng(-6.2241875,106.8054558),
+  //   zoom: 15,
+  // );
+  //
+  // Completer<GoogleMapController> mapsController = Completer();
 
   // late var circles = Set<Circle>().obs;
   // late var marker = Marker(markerId: MarkerId("satker"),).obs;
-  late var myLocation = Rxn<Position>().obs;
+  // late var myLocation = Rxn<Position>().obs;
 
-  var gogleMapsKey = 0.obs;
+  // var gogleMapsKey = 0.obs;
 
   void nextStep() {
     offset.value = 1.0;
@@ -67,9 +67,9 @@ class KebunController extends GetxController {
     super.onInit();
   }
 
-  void pickLocation() async {
-    LocationResult? result = await showLocationPicker(Get.context!, "AIzaSyBFL6YRlTNKGrchwEzxCTauajZAc_VXBdY", countries: ["ID"]);
-  }
+  // void pickLocation() async {
+  //   LocationResult? result = await showLocationPicker(Get.context!, "AIzaSyBFL6YRlTNKGrchwEzxCTauajZAc_VXBdY", countries: ["ID"]);
+  // }
 
   Future fetchKebun() async {
     kebun.value.value = await Kebun.instance.fetchOne(id: Get.arguments);

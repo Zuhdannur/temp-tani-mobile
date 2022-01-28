@@ -41,11 +41,15 @@ class LoggingInterceptors extends Interceptor {
               content: response.message ?? "-");
         } catch (e) {
           AppHelpers.showSnackBar(
-              snackBarMode: SnackBarMode.ERROR, content: "Terjadi kesalahan, silakan coba kembali dalam beberapa saat.");
+              snackBarMode: SnackBarMode.ERROR, content: e.toString());
+          // AppHelpers.showSnackBar(
+          //     snackBarMode: SnackBarMode.ERROR, content: "Terjadi kesalahan, silakan coba kembali dalam beberapa saat.");
         }
       } else {
+        // AppHelpers.showSnackBar(
+        //     snackBarMode: SnackBarMode.ERROR, content: "Terjadi kesalahan, silakan coba kembali dalam beberapa saat.");
         AppHelpers.showSnackBar(
-            snackBarMode: SnackBarMode.ERROR, content: "Terjadi kesalahan, silakan coba kembali dalam beberapa saat.");
+            snackBarMode: SnackBarMode.ERROR, content: err.message);
       }
     }
     super.onError(err, handler);

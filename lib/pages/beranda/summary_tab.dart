@@ -53,30 +53,32 @@ class SummaryTab extends StatelessWidget {
                             ],
                           ),
                         ),
-                        // Material(
-                        //   color: Colors.transparent,
-                        //   child: InkWell(
-                        //     borderRadius: BorderRadius.circular(4),
-                        //     onTap: (){
-                        //
-                        //     },
-                        //     child: Container(
-                        //       decoration: BoxDecoration(
-                        //           color: AppColors.buttonSecondary.withOpacity(0.25),
-                        //           borderRadius: BorderRadius.circular(4)
-                        //
-                        //       ),
-                        //       child: Padding(
-                        //         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                        //         child: Icon(
-                        //           FeatherIcons.printer,
-                        //           color: AppColors.icon,
-                        //           size: 16,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // )
+                        if(controller.idAnggaran.value.value!=null)...[
+                          Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(4),
+                              onTap: (){
+                                controller.cetakLaporan();
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: AppColors.buttonSecondary.withOpacity(0.25),
+                                    borderRadius: BorderRadius.circular(4)
+
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                  child: Icon(
+                                    FeatherIcons.printer,
+                                    color: AppColors.icon,
+                                    size: 16,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ]
                       ],
                     ),
                   ),

@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
+// import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hitungtani/services/repository.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:hitungtani/components/app_button_primary.dart';
 import 'package:hitungtani/components/app_button_secondary.dart';
@@ -107,11 +107,11 @@ class Init {
   }
 }
 
-Future<String> getAddressFromLatLong({required double lat, required double long}) async {
-  List<Placemark> myPlacemarks = await placemarkFromCoordinates(lat, long, localeIdentifier: "id_ID");
-  print(myPlacemarks[0].toJson());
-  return "${myPlacemarks[0].street}, ${myPlacemarks[0].subLocality}, ${myPlacemarks[0].locality}, ${myPlacemarks[0].subAdministrativeArea}, ${myPlacemarks[0].administrativeArea} ${myPlacemarks[0].postalCode}";
-}
+// Future<String> getAddressFromLatLong({required double lat, required double long}) async {
+//   List<Placemark> myPlacemarks = await placemarkFromCoordinates(lat, long, localeIdentifier: "id_ID");
+//   print(myPlacemarks[0].toJson());
+//   return "${myPlacemarks[0].street}, ${myPlacemarks[0].subLocality}, ${myPlacemarks[0].locality}, ${myPlacemarks[0].subAdministrativeArea}, ${myPlacemarks[0].administrativeArea} ${myPlacemarks[0].postalCode}";
+// }
 
 void showResultDialog({String? title, String? message, String? type, String? buttonText, Function? callback}){
   showDialog(
