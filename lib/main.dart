@@ -1,5 +1,4 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +15,7 @@ import 'package:hive/hive.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
-import 'package:google_map_location_picker/generated/l10n.dart' as location_picker;
+// import 'package:google_map_location_picker/generated/l10n.dart' as location_picker;
 
 import 'controllers/akun_controller.dart';
 import 'models/user.dart';
@@ -24,7 +23,7 @@ import 'models/user.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
   // initializeDateFormatting("id_ID");
   Intl.defaultLocale = "id_ID";
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -34,11 +33,11 @@ void main() async {
   if (kDebugMode) {
     // Force disable Crashlytics collection while doing every day development.
     // Temporarily toggle this to true if you want to test crash reporting in your app.
-    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+    // await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
   } else {
     // Handle Crashlytics enabled status when not in Debug,
     // e.g. allow your users to opt-in to crash reporting.
-    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+    // await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
   }
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((value) {
     runApp(MyApp());
@@ -62,7 +61,6 @@ class MyApp extends StatelessWidget {
             title: 'Hitung Tani',
             debugShowCheckedModeBanner: false,
             localizationsDelegates: const [
-              location_picker.S.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,

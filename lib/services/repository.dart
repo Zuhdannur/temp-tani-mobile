@@ -10,7 +10,8 @@ import 'package:hitungtani/services/logging_interceptor.dart';
 import 'package:hitungtani/utils/helpers.dart';
 
 class Repository{
-  String baseUrl = "${FlutterConfig.get("API_BASE_URL")}";
+  // String baseUrl = "${FlutterConfig.get("API_BASE_URL")}";
+  String baseUrl = "https://tani.obunegarock.xyz/api/";
 
   Dio dio;
   Dio tokenDio;
